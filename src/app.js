@@ -9,6 +9,22 @@ const jsonParser = bodyParser.json();
 module.exports = (db) => {
     app.get('/health', (req, res) => res.send('Healthy'));
 
+
+    /*
+    Input: 
+        - start_lat: integer
+        - start_long: integer
+        - end_lat: integer
+        - end_long: integer
+        - rider_name: integer
+        - driver_name: integer
+        - driver_vehicle: integer
+    Output: 
+        - Status: 200
+        - Body: Rides
+        - Errors: 
+            - error_code: VALIDATION_ERROR/SERVER_ERROR
+    */
     app.post('/rides', jsonParser, (req, res) => {
         const startLatitude = Number(req.body.start_lat);
         const startLongitude = Number(req.body.start_long);
@@ -76,6 +92,14 @@ module.exports = (db) => {
         });
     });
 
+    /*
+    Input: -
+    Output: 
+        - Status: 200
+        - Body: Rides
+        - Errors: 
+            - error_code: RIDES_NOT_FOUND/SERVER_ERROR
+    */
     app.get('/rides', (req, res) => {
         db.all('SELECT * FROM Rides', function (err, rows) {
             if (err) {
@@ -96,6 +120,15 @@ module.exports = (db) => {
         });
     });
 
+    /*
+    Input:
+        - id: string
+    Output: 
+        - Status: 200
+        - Body: Rides
+        - Errors: 
+            - error_code: RIDES_NOT_FOUND/SERVER_ERROR
+    */
     app.get('/rides/:id', (req, res) => {
         db.all(`SELECT * FROM Rides WHERE rideID='${req.params.id}'`, function (err, rows) {
             if (err) {
