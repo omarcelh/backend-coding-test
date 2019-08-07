@@ -7,6 +7,13 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 module.exports = (db) => {
+    /*
+    Input: 
+        -
+    Output: 
+        - Status Code: 200
+        - Body: 'Healthy'
+    */
     app.get('/health', (req, res) => res.send('Healthy'));
 
 
